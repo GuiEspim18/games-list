@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -27,6 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.fiap.gameslist.repository.GameCard
+import br.com.fiap.gameslist.repository.getAllGames
 import br.com.fiap.gameslist.ui.theme.GamesListTheme
 
 class MainActivity : ComponentActivity() {
@@ -77,14 +80,8 @@ fun Greeting() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
-            item {
-                Text(text = "Item 1")
-            }
-            item {
-                Text(text = "Item 2")
-            }
-            item {
-                Text(text = "Item 3")
+            items(getAllGames()) {
+                GameCard(game = it)
             }
         }
     }
