@@ -23,8 +23,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,6 +58,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting() {
+    var studioState by remember {
+        mutableStateOf("")
+    }
+
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -63,8 +72,10 @@ fun Greeting() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = studioState,
+            onValueChange = {
+                studioState = it
+            },
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(text = "Nome do stúdio")
@@ -81,7 +92,9 @@ fun Greeting() {
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
             items(getAllGames()) {
-                GameCard(game = it)
+                if (it.studio.lowercase().contains(studioState.lowercase())) {
+                    GameCard(game = it)
+                }
             }
         }
     }
